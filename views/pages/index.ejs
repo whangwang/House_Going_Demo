@@ -68,10 +68,62 @@
           <td data-city="-1"><font><-back</font></td>
         </tr>
       </table>
+      <div class="search_result">
+         <div class="result_element first">
+           <span data-move="-1" class="prev_element disable active"><</span>
+           <span data-move="2" class="next_element active">></span>
+           <img class="result_img" src="https://hp2.591.com.tw/house/active/2015/03/06/142565492967367209_210x158.crop.jpg" />
+           <a href="#"><div class="result_title">近捷運、交通超方便之幽靜大雅房</div></a>
+           <div class="result_des">台北租屋,中山租屋,雅房出租,近捷運、交通超方便之幽靜大雅</div>
+           <div class="result_info">
+             9,800 元/月 : 9坪
+             <span class="result_tag" style="margin-left: 20px;">雅房</span>
+             <span class="result_tag" style="margin-left: 8px;">中山區</font>
+           </div>
+         </div>
+         <div class="result_element">
+           <span data-move="1" class="prev_element"><</span>
+           <span data-move="3" class="next_element">></span>
+         </div>
+         <div class="result_element">
+           <span data-move="2" class="prev_element"><</span>
+           <span data-move="-1" class="next_element disable">></span>
+         </div>
+      </div>
     </div>
 
   </body>
   <script>
+     $('body').on('click','.prev_element',function(){
+       if($(this).hasClass('disable')){
+
+       }else{
+         $('.search_result').css('margin-left',((parseInt($(this).data('move'))-1)*-85)+'vw');
+         $('.prev_element.active').removeClass('active');
+         $('.next_element.active').removeClass('active');
+         var d = (parseInt($(this).data('move'))-1);
+         setTimeout(function(){
+           console.log('test123');
+           $('.search_result').find('.result_element').eq(d).find('.prev_element').addClass('active');
+           $('.search_result').find('.result_element').eq(d).find('.next_element').addClass('active');
+         }, 500);
+       }
+     });
+     $('body').on('click','.next_element',function(){
+       if($(this).hasClass('disable')){
+
+       }else{
+         $('.search_result').css('margin-left',((parseInt($(this).data('move'))-1)*-85)+'vw');
+         $('.prev_element.active').removeClass('active');
+         $('.next_element.active').removeClass('active');
+         var d = (parseInt($(this).data('move'))-1);
+         setTimeout(function(){
+           console.log(d);
+           $('.search_result').find('.result_element').eq(d).find('.prev_element').addClass('active');
+           $('.search_result').find('.result_element').eq(d).find('.next_element').addClass('active');
+         }, 500);
+       }
+     });
      $('body').on('click','.select_region td',function(){
        if($(this).data('city')=='-1'){
          $('.select_region').fadeOut(500,function(){
@@ -84,19 +136,22 @@
            c_id: $(this).data('city'),
            s_id: $(this).data('sec')
          };
-         $.ajax('/ajax_search', {
+         $('.select_region').fadeOut(500);
+         $('.search_result').fadeIn(500);
+
+    /*     $.ajax('/ajax_search', {
                    type: 'POST',
                    data: JSON.stringify(data),
                    contentType: 'application/json',
                    success: function(rtn) {
                      console.log(rtn);
-                     $('.select_city').fadeOut();
-                     $('.select_region').fadeIn();
+                     $('.select_region').fadeOut(500);
+                     $('.search_result').fadeIn(500);
                    },
                    error  : function() {
                      console.log('error');
                    }
-          });
+          });*/
 
        }
      });

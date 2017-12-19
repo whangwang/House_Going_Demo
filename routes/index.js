@@ -1623,19 +1623,27 @@ module.exports = function(app) {
                       return;
                     }else{
                       var result = JSON.parse(unescape(String(body).replace(/\\u/g, '%u')));
-                      var output ="精選推薦<br>";
-                      for(var i = 0; i < result.data.topData.length; i++){
-                        output += "title: "+result.data.topData[i].address+'<br>';
-                        output += "keyword: "+result.data.topData[i].alt+'<br>';
-                        output += "area: "+result.data.topData[i].area+'<br>';
-                        output += "url: https://rent.591.com.tw/"+result.data.topData[i].detail_url+'<br>';
-                        output += "img: "+result.data.topData[i].img_src+'<br>';
-                        output += "kind: "+result.data.topData[i].kind_str+'<br>';
-                        output += "price: "+result.data.topData[i].price+' '+result.data.topData[i].price_unit+'<br>';
-                        output += "section: "+result.data.topData[i].section_str+'<br>';
-                        output += "--<br>";
+                      var output;
+                      output = {
+                        data: (function() {
+                              var arr = [];
+                              var i;
+                              for(var i = 0; i < result.data.topData.length; i++){
+                                  arr.push({
+                                      title: result.data.topData[i].address,
+                                      keyword: result.data.topData[i].alt,
+                                      area: result.data.topData[i].area,
+                                      url: "https://rent.591.com.tw/"+result.data.topData[i].detail_url,
+                                      img: result.data.topData[i].img_src,
+                                      kind: result.data.topData[i].kind_str,
+                                      price: result.data.topData[i].price+' '+result.data.topData[i].price_unit,
+                                      section: result.data.topData[i].section_str
+                                  });
+                              }
+                              return arr;
+                         })()
                       }
-                      console.log(output);
+                      res.send(output);
                     }
                   });
                 }

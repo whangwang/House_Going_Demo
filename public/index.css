@@ -53,6 +53,118 @@ line-height: 210px;
     position: absolute;
 }
 
+.result_title{
+  font-size: 30px;
+margin-left: 60px;
+margin-top: 70px;
+line-height: 10px;
+}
+
+.result_info{
+  margin-left: 60px;
+font-size: 20px;
+color: blue;
+margin-top: 60px;
+
+}
+
+.result_tag{
+  font-size: 15px;
+    background-color: #F2F2F2;
+    color: black;
+    padding: 5px 10px 5px 10px;
+    border-radius: 15px;
+}
+
+.search_result{
+  height: calc( 65vh - 210px );
+    margin-top: 12.5vh;
+  width: 100vw;
+  display: none;
+  white-space: nowrap; /*Prevents Wrapping*/
+  -webkit-transition: all 0.5s; /* Safari */
+  transition: all 0.5s;
+  transition-timing-function: ease-in-out;
+
+}
+
+.prev_element{
+  font-size: 60px;
+    font-weight: 300;
+    color: gray;
+    opacity: 0.5;
+    float: left;
+    margin-top: calc( 32.5vh - 155px );
+    transform: translate(-45px,0);
+    cursor: pointer;
+    display: none;
+}
+
+.next_element{
+  font-size: 60px;
+    font-weight: 300;
+    color: gray;
+    opacity: 0.5;
+    float: right;
+    margin-top: calc( 32.5vh - 155px );
+    transform: translate(45px,0);
+    cursor: pointer;
+    display: none;
+}
+
+.next_element.active{
+  display: block;
+}
+
+.prev_element.active{
+  display: block;
+}
+
+.prev_element:hover{
+  opacity: 1;
+}
+.next_element:hover{
+  opacity: 1;
+}
+
+.prev_element.disable{
+  cursor: auto;
+    user-select: none;
+}
+
+.next_element.disable{
+  cursor: auto;
+    user-select: none;
+}
+
+.prev_element.disable:hover{
+  opacity: 0.5;
+  cursor: auto;
+    user-select: none;
+}
+
+.next_element.disable:hover{
+  opacity: 0.5;
+  cursor: auto;
+    user-select: none;
+}
+
+.result_element{
+  height: 100%;
+  width: 80vw;
+  margin-left: 5vw;
+  border-radius: 30px;
+  background-color: white;
+  display: inline-block; /*Display inline and maintain block characteristics.*/
+  vertical-align: top; /*Makes sure all the divs are correctly aligned.*/
+  white-space: normal; /*Prevents child elements from inheriting nowrap.*/
+      text-align: left;
+}
+
+.result_element.first{
+  margin-left: 10vw;
+}
+
 .select_region{
   width: calc( 100% - 400px );
     margin-left: 200px;
@@ -146,6 +258,18 @@ border-radius: 100px;
     padding-left: 10px;
     padding-right: 10px;
     margin-right: 100%;
+}
+
+.result_img{
+  margin-left: calc( 80vw - 90px - 200px );
+width: 200px;
+position: absolute;
+margin-top: 70px;
+}
+
+.result_des{
+  margin-left: 60px;
+margin-top: 30px;
 }
 
 .sub-title{
