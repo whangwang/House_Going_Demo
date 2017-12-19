@@ -1,25 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-
+  <head>
     <% include ../partials/head %>
+    <link rel="stylesheet" href="/public/index.css">
+    <script src="/public/index.js"></script>
+  </head>
+  <body>
+    <img class="prev-img" src="/public/image/prev-01.jpg" mode="1" />
+    <div class="cont-1">
+      <div class="header_title" >
+        <font class="title">house&nbsp;going?</font>
+        <font class="sub-title">Facebook&nbsp;ChatBot</font>
+        <font class="description">Your&nbsp;Renting&nbsp;Helper!</font>
+        <button class="try" >Give a try!</button>
+      </div>
+    </div>
+    <div class="cont-2">
+      <div class="overview_div no1">
+        <font class="title overview" >Overview</font>
+        <p class="overview_content">
+          以選單式來讓使用者迅速進入想要使用的功能。<br>
+          目前選單上僅有正在開發中的租屋查詢選項，租屋查詢又分成三種篩選方式：<br>
+          城市，鄉鎮市區，學區。<br>
+          使用者選擇選單上的項目後，會引導進行位置選取，再來針對所選的條件列出房屋推薦。
+        </p>
+        <button class="next_btn no1">Next ></button>
+      </div>
+      <div class="overview_div no2" style="opacity: 1;">
+        <font class="title overview" >Search</font>
+        <p class="overview_content">
+          當使用者選擇查詢功能時，ChatBot會先向使用者要求搜尋位置，透過選擇的位置分析出縣市或是行政區後，再利用爬蟲技術即時藉由租屋網站取得最新的租屋資訊，返回給使用者參考。
+        </p>
+        <!-- <button class="next_btn no2">Next ></button> -->
 
-    <body>
+      </div>
+    </div>
+    <div class="live-demo">
+      <font class="demo_title">Live Demo</font>
+      <table class="select_city">
+        <tr>
+          <td data-id="1"><img src="public/image/city/city-02.svg" /><font>台北市</font></td>
+          <td data-id="3"><img src="public/image/city/city-03.svg" /><font>新北市</font></td>
+          <td data-id="6"><img src="public/image/city/city-04.svg" /><font>桃園市</font></td>
+          <td data-id="4"><img src="public/image/city/city-05.svg" /><font>新竹市</font></td>
+          <td data-id="5"><img src="public/image/city/city-06.svg" /><font>新竹縣</font></td>
+          <td data-id="21"><img src="public/image/city/city-07.svg" /><font>宜蘭縣</font></td>
+          <td data-id="2"><img src="public/image/city/city-08.svg" /><font>基隆市</font></td>
+          <td data-id="8"><img src="public/image/city/city-09.svg" /><font>台中市</font></td>
+          <td data-id="10"><img src="public/image/city/city-10.svg" /><font>彰化縣</font></td>
+          <td data-id="14"><img src="public/image/city/city-11.svg" /><font>雲林縣</font></td>
+        </tr>
+        <tr>
+          <td data-id="7"><img src="public/image/city/city-12.svg" /><font>苗栗縣</font></td>
+          <td data-id="11"><img src="public/image/city/city-13.svg" /><font>南投縣</font></td>
+          <td data-id="17"><img src="public/image/city/city-14.svg" /><font>高雄市</font></td>
+          <td data-id="15"><img src="public/image/city/city-15.svg" /><font>台南市</font></td>
+          <td data-id="12"><img src="public/image/city/city-16.svg" /><font>嘉義市</font></td>
+          <td data-id="13"><img src="public/image/city/city-17.svg" /><font>嘉義縣</font></td>
+          <td data-id="19"><img src="public/image/city/city-18.svg" /><font>屏東縣</font></td>
+          <td data-id="22"><img src="public/image/city/city-19.svg" /><font>台東縣</font></td>
+          <td data-id="23"><img src="public/image/city/city-20.svg" /><font>花蓮縣</font></td>
 
-        <% include ../partials/nav %>
+        </tr>
+      </table>
+      <table class="select_region">
+        <tr>
+          <td data-city="-1"><font><-back</font></td>
+        </tr>
+      </table>
+    </div>
 
-        <section name="jumbotron"  >
-            <div class="jumbotron text-center">
-                <h1>CodePrep.io Presents</h1>
-                <p>Using EJS templating with Node.js</p>
-            </div>
-        </section>
+  </body>
+  <script>
+     $('body').on('click','.select_region td',function(){
+       if($(this).data('city')=='-1'){
+         $('.select_region').fadeOut(500,function(){
+           $('.select_region').html('<tr><td data-city="-1"><font><-back</font></td></tr>');
+         });
+         $('.select_city').fadeIn(500);
+       }else{
 
-        <% include ../partials/3columns %>
+         var data = {
+           c_id: $(this).data('city'),
+           s_id: $(this).data('sec')
+         };
+         $.ajax('/ajax_search', {
+                   type: 'POST',
+                   data: JSON.stringify(data),
+                   contentType: 'application/json',
+                   success: function(rtn) {
+                     console.log(rtn);
+                     $('.select_city').fadeOut();
+                     $('.select_region').fadeIn();
+                   },
+                   error  : function() {
+                     console.log('error');
+                   }
+          });
 
-        <% include ../partials/footer %>
+       }
+     });
+     $('body').on('click','.select_city td',function(){
+       var data = {
+         id: $(this).data('id')
+       };
+       $.ajax('/ajax_getsection', {
+                 type: 'POST',
+                 data: JSON.stringify(data),
+                 contentType: 'application/json',
+                 success: function(rtn) {
+                   console.log(rtn);
+                   var tr=0;
+                   for(var i = 0;i < rtn.section.length;i++){
 
-        <% include ../partials/scripts %>
+                     $('.select_region').find('tr').eq(tr).append('<td data-city="'+rtn.section[i].c_id+'" data-sec="'+rtn.section[i].id+'"><font>'+rtn.section[i].name+'</font></td>');
 
-    </body>
-
+                     if((i+2)%10==0 ){
+                       $('.select_region').append('<tr></tr>');
+                       tr++;
+                     }
+                   }
+                   $('.select_city').fadeOut();
+                   $('.select_region').fadeIn();
+                 },
+                 error  : function() {
+                   console.log('error');
+                 }
+        });
+     });
+  </script>
 </html>
