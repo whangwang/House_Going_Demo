@@ -136,10 +136,10 @@
            c_id: $(this).data('city'),
            s_id: $(this).data('sec')
          };
-         $('.select_region').fadeOut(500);
-         $('.search_result').fadeIn(500);
+      //   $('.select_region').fadeOut(500);
+      //   $('.search_result').fadeIn(500);
 
-    /*     $.ajax('/ajax_search', {
+         $.ajax('/ajax_search', {
                    type: 'POST',
                    data: JSON.stringify(data),
                    contentType: 'application/json',
@@ -147,11 +147,21 @@
                      console.log(rtn);
                      $('.select_region').fadeOut(500);
                      $('.search_result').fadeIn(500);
+                     $('.search_result').empty();
+                     for(var i = 0;i < rtn.data.length; i++){
+                       if(i==0){
+                         $('.search_result').append('<div class="result_element first"><span data-move="-1" class="prev_element disable active"><</span><span data-move="2" class="next_element active">></span><img class="result_img" src="'+rtn.data[i].img+'" /><a href="#"><div class="result_title">'+rtn.data[i].title+'</div></a><div class="result_des">'+rtn.data[i].keyword+'</div><div class="result_info">'+rtn.data[i].price+' : '+rtn.data[i].area+'<span class="result_tag" style="margin-left: 20px;">'+rtn.data[i].kind+'</span><span class="result_tag" style="margin-left: 8px;">'+rtn.data[i].section+'</font></div></div>');
+                       }else if(i==(rtn.data.length-1)){
+                         $('.search_result').append('<div class="result_element"><span data-move="'+i+'" class="prev_element"><</span><span data-move="-1" class="next_element disable">></span><img class="result_img" src="'+rtn.data[i].img+'" /><a href="#"><div class="result_title">'+rtn.data[i].title+'</div></a><div class="result_des">'+rtn.data[i].keyword+'</div><div class="result_info">'+rtn.data[i].price+' : '+rtn.data[i].area+'<span class="result_tag" style="margin-left: 20px;">'+rtn.data[i].kind+'</span><span class="result_tag" style="margin-left: 8px;">'+rtn.data[i].section+'</font></div></div>');
+                       }else{
+                         $('.search_result').append('<div class="result_element"><span data-move="'+i+'" class="prev_element"><</span><span data-move="'+(i+2)+'" class="next_element">></span><img class="result_img" src="'+rtn.data[i].img+'" /><a href="#"><div class="result_title">'+rtn.data[i].title+'</div></a><div class="result_des">'+rtn.data[i].keyword+'</div><div class="result_info">'+rtn.data[i].price+' : '+rtn.data[i].area+'<span class="result_tag" style="margin-left: 20px;">'+rtn.data[i].kind+'</span><span class="result_tag" style="margin-left: 8px;">'+rtn.data[i].section+'</font></div></div>');
+                       }
+                     }
                    },
                    error  : function() {
                      console.log('error');
                    }
-          });*/
+          });
 
        }
      });
